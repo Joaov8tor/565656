@@ -1,35 +1,72 @@
 local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Criar o painel
+-- Criar o painel (inicialmente invisível)
 local painel = Instance.new("Frame")
-painel.Size = UDim2.new(0, 300, 0, 150)
-painel.Position = UDim2.new(0.5, -150, 0.5, -75)
+painel.Size = UDim2.new(0, 300, 0, 200)
+painel.Position = UDim2.new(0.5, -150, 0.05, 0)  -- Canto superior centralizado
 painel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Cor preta
-painel.Visible = false -- Começa invisível
+painel.Visible = false  -- Começa invisível
 painel.Parent = playerGui
 
--- Caixa de texto para inserir a velocidade
+-- Criar o nome "PAINEL" no painel
+local nomePainel = Instance.new("TextLabel")
+nomePainel.Size = UDim2.new(0, 300, 0, 50)
+nomePainel.Position = UDim2.new(0, 0, 0, 0)
+nomePainel.Text = "PAINEL"
+nomePainel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- Texto branco
+nomePainel.TextSize = 24
+nomePainel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Cor preta de fundo
+nomePainel.TextAlign = Enum.TextAnchor.MiddleCenter
+nomePainel.Parent = painel
+
+-- Criar a caixa de texto para inserir a velocidade
 local caixaTexto = Instance.new("TextBox")
 caixaTexto.Size = UDim2.new(0, 200, 0, 50)
-caixaTexto.Position = UDim2.new(0.5, -100, 0.3, 0)
+caixaTexto.Position = UDim2.new(0.5, -100, 0.4, 0)
 caixaTexto.PlaceholderText = "Digite a velocidade"
 caixaTexto.TextColor3 = Color3.fromRGB(255, 255, 255)
 caixaTexto.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
 caixaTexto.ClearTextOnFocus = true
 caixaTexto.Parent = painel
 
--- Criar o botão de abrir/fechar painel
+-- Criar o botão de aplicar a velocidade
+local botaoAplicar = Instance.new("TextButton")
+botaoAplicar.Size = UDim2.new(0, 200, 0, 50)
+botaoAplicar.Position = UDim2.new(0.5, -100, 0.6, 0)
+botaoAplicar.Text = "Aplicar Velocidade"
+botaoAplicar.TextColor3 = Color3.fromRGB(255, 255, 255)
+botaoAplicar.BackgroundColor3 = Color3.fromRGB(0, 128, 0)  -- Cor verde para o botão
+botaoAplicar.Parent = painel
+
+-- Criar o botão de abrir/fechar painel (exibe "PAINEL" no botão)
 local botaoHub = Instance.new("TextButton")
 botaoHub.Size = UDim2.new(0, 100, 0, 50)
 botaoHub.Position = UDim2.new(0.5, -50, 0.1, 0)
-botaoHub.Text = "Abrir/Fechar"
+botaoHub.Text = "PAINEL"
 botaoHub.TextColor3 = Color3.fromRGB(255, 255, 255)
-botaoHub.BackgroundColor3 = Color3.fromRGB(0, 0, 255)  -- Cor do botão
+botaoHub.BackgroundColor3 = Color3.fromRGB(0, 0, 255)  -- Cor azul para o botão
 botaoHub.Parent = playerGui
 
 -- Função para alternar a visibilidade do painel
 botaoHub.MouseButton1Click:Connect(function()
-    painel.Visible = not painel.Visible  -- Altera a visibilidade do painel
+    painel.Visible = not painel.Visible  -- Alterna a visibilidade do painel
 end)
+
+-- Função para aplicar a velocidade do jogador
+botaoAplicar.MouseButton1Click:Connect(function()
+    local velocidade = tonumber(caixaTexto.Text)  -- Obtém o valor da caixa de texto
+    if velocidade and velocidade > 0 then
+        local personagem = player.Character
+        if personagem then
+            local humanoide = personagem:FindFirstChildOfClass("Humanoid")
+            if humanoide then
+                humanoide.WalkSpeed = velocidade  -- Aplica a nova velocidade
+            end
+        end
+    else
+        print("Valor de velocidade inválido")  -- Caso a velocidade seja inválida
+    end
+end)
+
 
