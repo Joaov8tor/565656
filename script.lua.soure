@@ -1,0 +1,35 @@
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Criar o painel
+local painel = Instance.new("Frame")
+painel.Size = UDim2.new(0, 300, 0, 150)
+painel.Position = UDim2.new(0.5, -150, 0.5, -75)
+painel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Cor preta
+painel.Visible = false -- Começa invisível
+painel.Parent = playerGui
+
+-- Caixa de texto para inserir a velocidade
+local caixaTexto = Instance.new("TextBox")
+caixaTexto.Size = UDim2.new(0, 200, 0, 50)
+caixaTexto.Position = UDim2.new(0.5, -100, 0.3, 0)
+caixaTexto.PlaceholderText = "Digite a velocidade"
+caixaTexto.TextColor3 = Color3.fromRGB(255, 255, 255)
+caixaTexto.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+caixaTexto.ClearTextOnFocus = true
+caixaTexto.Parent = painel
+
+-- Criar o botão de abrir/fechar painel
+local botaoHub = Instance.new("TextButton")
+botaoHub.Size = UDim2.new(0, 100, 0, 50)
+botaoHub.Position = UDim2.new(0.5, -50, 0.1, 0)
+botaoHub.Text = "Abrir/Fechar"
+botaoHub.TextColor3 = Color3.fromRGB(255, 255, 255)
+botaoHub.BackgroundColor3 = Color3.fromRGB(0, 0, 255)  -- Cor do botão
+botaoHub.Parent = playerGui
+
+-- Função para alternar a visibilidade do painel
+botaoHub.MouseButton1Click:Connect(function()
+    painel.Visible = not painel.Visible  -- Altera a visibilidade do painel
+end)
+
